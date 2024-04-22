@@ -2,7 +2,7 @@
 # Lista: Alg-05.2
 # Exercício: 16
 
-'''numérica. Escreva um programa que permita ao usuário
+'''Escreva um programa que permita ao usuário
 converter um número de uma base para base 10 e vice-versa. Seu programa deve suportar
 bases entre 2 (binário) e 16 (hexadecimal) para o número de entrada e o número de resultado.
 Divida seu programa em várias funções, incluindo uma função que converte de uma base

@@ -2,7 +2,7 @@
 # Lista: Alg-05.2
 # Exercício: 07
 
-'''válido? Se você possui 3 canudos, possivelmente de tamanhos diferentes, pode ou
+'''Se você possui 3 canudos, possivelmente de tamanhos diferentes, pode ou
 não ser possível montar um triângulo juntando as pontas dos canudos. Por exemplo, se todos
 tiverem 15 cm de comprimento, facilmente você pode formar um triângulo equilátero. Porém,
 se um canudo tem 15 cm e os outros dois tem 5 cm cada, você não consegue formar o
