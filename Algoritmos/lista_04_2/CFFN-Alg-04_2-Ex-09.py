@@ -2,7 +2,7 @@
 # Lista: Alg-04.2
 # Exercício: 09
 
-'''Propost: Escreva um programa Python que implemente o método de Newton para
+'''Escreva um programa Python que implemente o método de Newton para
 calcular e exibir o valor da raiz quadrada de um número. O método de Newton é descrito pelo
 pseudo-código abaixo:
 Leia o valor de x do usuário
