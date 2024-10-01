@@ -5,10 +5,56 @@
 #include <cstdlib>
 using namespace std;
 /*
-Crie um sistema bancário para gerenciar contas e aplicações de uma pessoa, com as operações de depósito,
+Tarefa: Crie um sistema bancário para gerenciar contas e aplicações de uma pessoa, com as operações de depósito,
 saque, transferência, extrato, abertura e encerramento de contas. 
+Task: Create a bank system to manage accounts and applications of someone, with the operations of deposit, withdrawal,
+transference, extract, account register and account closure.
+
+PS: This is a 1.0 version, something you can call the 'skeletoon' of this system.
+           _..--""---.
+          /           ".
+          `            l
+          |'._  ,._ l/"\
+          |  _J<__/.v._/
+           \( ,~._,,,,-)
+            `-\' \`,,j|
+               \_,____J
+          .--.__)--(__.--.
+         /  `-----..--'. j
+         '.- '`--` `--' \\
+        //  '`---'`  `-' \\
+       //   '`----'`.-.-' \\
+     _//     `--- -'   \' | \________
+    |  |         ) (      `.__.---- -'\
+     \7          \`-(               74\\\
+     ||       _  /`-(               l|//7__
+     |l    ('  `-)-/_.--.          f''` -.-"|
+     |\     l\_  `-'    .'         |     |  |
+     llJ   _ _)J--._.-('           |     |  l
+     |||( ( '_)_  .l   ". _    ..__I     |  L
+     ^\\\||`'   "   '"-. " )''`'---'     L.-'`-.._
+          \ |           ) /.              ``'`-.._``-.
+          l l          / / |                      |''|
+           " \        / /   "-..__                |  |
+           | |       / /          1       ,- t-...J_.'
+           | |      / /           |       |  |
+           J  \  /"  (            l       |  |
+           | ().'`-()/            |       |  |
+          _.-"_.____/             l       l.-l
+      _.-"_.+"|                  /        \.  \
+/"\.-"_.-"  | |                 /          \   \
+\_   "      | |                1            | `'|
+  |ll       | |                |            i   |
+  \\\       |-\               \j ..          L,,'. `/
+ __\\\     ( .-\           .--'    ``--../..'      '-..
+   `'''`----`\\\\ .....--'''
+              \\\\
+
+Eventually, the system will be updated and incorporate more polished methods, make sure to check new updates on:
+ https://github.com/cauafelipe1/BCC/tree/main/semestre_2/POO/bank_system
 */
 
+//Account class with name, number and balance as it respectives attributes
 class Account {
     public:
         Account( std::string name, int number, double balance) {
@@ -22,6 +68,7 @@ class Account {
         double balance;
 };
 
+//Bank class holding a vector/list of accounts
 class Bank {
     public:
         std::vector<Account> accounts;
@@ -30,10 +77,10 @@ class Bank {
         Account* getAccountByNumber(int accountNumber) {
         for (auto& account : accounts) {
             if (account.number == accountNumber) {
-                return &account; // Retorna um ponteiro para a conta encontrada
+                return &account; // return the pointer of an account if it is in the vector
             }
         }
-        return nullptr; // Retorna nullptr se a conta não for encontrada
+        return nullptr; // return a null pointer (nullptr) if no account matched
     }
 };
 
@@ -43,7 +90,7 @@ class BankOperation {
 
 };
 
-//classes for especific operations inheriting BankOperation 
+//classes for especific operations inheriting the BankOperation class 
 class RegisterOperation: public BankOperation{
     public:
     RegisterOperation(std::string name) : name(std::move(name)), number(rand()), balance(0) {}
@@ -150,6 +197,7 @@ public:
     }
 };
 
+//User Interface
 int main() {
     Bank bank;
     int choice;
@@ -178,23 +226,7 @@ int main() {
                 RegisterOperation accountRegistered(name);
                 accountRegistered.operate(bank);
                 break;
-                //returning to menu
-                /*
-                std::string answ;
-                cout << "New account added with success! Wanna go back to the menu? (Y/N)";
-                cin>>answ;
 
-                if (answ == "Y" | answ == "y") {
-                    choice = 0;
-                    continue;
-                }
-                else if (answ == "N" | answ == "n") {
-                    break;
-                } 
-                else {
-
-                }
-                */
             }
             case 2: {
                 int number;
