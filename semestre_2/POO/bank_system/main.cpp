@@ -10,46 +10,7 @@ saque, transferência, extrato, abertura e encerramento de contas.
 Task: Create a bank system to manage accounts and applications of someone, with the operations of deposit, withdrawal,
 transference, extract, account register and account closure.
 
-PS: This is a 1.0 version, something you can call the 'skeletoon' of this system.
-           _..--""---.
-          /           ".
-          `            l
-          |'._  ,._ l/"\
-          |  _J<__/.v._/
-           \( ,~._,,,,-)
-            `-\' \`,,j|
-               \_,____J
-          .--.__)--(__.--.
-         /  `-----..--'. j
-         '.- '`--` `--' \\
-        //  '`---'`  `-' \\
-       //   '`----'`.-.-' \\
-     _//     `--- -'   \' | \________
-    |  |         ) (      `.__.---- -'\
-     \7          \`-(               74\\\
-     ||       _  /`-(               l|//7__
-     |l    ('  `-)-/_.--.          f''` -.-"|
-     |\     l\_  `-'    .'         |     |  |
-     llJ   _ _)J--._.-('           |     |  l
-     |||( ( '_)_  .l   ". _    ..__I     |  L
-     ^\\\||`'   "   '"-. " )''`'---'     L.-'`-.._
-          \ |           ) /.              ``'`-.._``-.
-          l l          / / |                      |''|
-           " \        / /   "-..__                |  |
-           | |       / /          1       ,- t-...J_.'
-           | |      / /           |       |  |
-           J  \  /"  (            l       |  |
-           | ().'`-()/            |       |  |
-          _.-"_.____/             l       l.-l
-      _.-"_.+"|                  /        \.  \
-/"\.-"_.-"  | |                 /          \   \
-\_   "      | |                1            | `'|
-  |ll       | |                |            i   |
-  \\\       |-\               \j ..          L,,'. `/
- __\\\     ( .-\           .--'    ``--../..'      '-..
-   `'''`----`\\\\ .....--'''
-              \\\\
-
+PS: This is a 1.0 version, something you can call the 'skeleton' of this system.
 Eventually, the system will be updated and incorporate more polished methods, make sure to check new updates on:
  https://github.com/cauafelipe1/BCC/tree/main/semestre_2/POO/bank_system
 */
