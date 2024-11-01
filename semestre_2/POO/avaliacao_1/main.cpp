@@ -202,6 +202,8 @@ public:
 
 
 int main() {
+
+
     Predio ifc;
     int choice;
     cout << "Olá! Seja bem vindo ao sistema de gerenciamento de entradas do predio XYZ!\n";
@@ -216,6 +218,7 @@ int main() {
         cout<<"---- 6) Consultar visitantes totais do predio\n";
         cout<<"---- 7) Sair do menu\n";
         cout<<"Escolha uma das opcoes (1, 2, 3, 4, 5, 6 ou 7): ";
+        //OBS.: foram apenas adicionados ao menu os metodos exigidos na prova
         cin>>choice;
         cin.ignore();
 
