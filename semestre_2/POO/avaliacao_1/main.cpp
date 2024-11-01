@@ -188,10 +188,128 @@ public:
 
 
 int main() {
+    Predio ifc;
+    int choice;
+    cout << "Olá! Seja bem vindo ao sistema de gerenciamento de entradas do predio XYZ!\n";
+    while(1) {
+        cout << "*********      Menu      *********\n";
+        cout << "-- Escolha uma opcao abaixo\n";
+        cout<<"---- 1) Registrar a entrada de uma pessoa visitante\n";
+        cout<<"---- 2) Registrar a entrada de uma empresa visitante\n";
+        cout<<"---- 3) Registrar a saida de uma pessoa visitante\n";
+        cout<<"---- 4) Transference\n";
+        cout<<"---- 5) Whithdrawal\n";
+        cout<<"---- 6) Account details\n";
+        cout<<"---- 7) Exit menu\n";
+        cout<<"Enter your choice (1, 2, 3, 4, 5, 6 or 7): ";
+        cin>>choice;
+        cin.ignore();
+
+        switch (choice) {
+            case 1: {
+                Pessoa newPessoa;
+                string nome;
+                int idade;
+                cout << "Você escolheu registrar a entrada de uma pessoa visitante!\n";
+                cout << "Insira os dados da pessoa visitante:\n";
+                cout << "Nome: ";
+                cin >> nome;
+                cout << "\nIdade: ";
+                cin >> idade;
+                newPessoa.setNome(nome);
+                newPessoa.setIdade(idade);
+                EntradaPessoaVisitante entrada(newPessoa);
+                entrada.operar(ifc);
+                cout << "\nO (a) visitante " << nome << " recebeu o cracha de identificação e entrou no predio!\n";
+                break;
+            }
+            case 2: {
+                Empresa newEmpresa;
+                string nome;
+                string cnpj;
+                cout << "Você escolheu registrar a entrada de uma empresa visitante!\n";
+                cout << "Insira os dados da empresa visitante:\n";
+                cout << "Nome: ";
+                cin >> nome;
+                cout << "\nCNPJ: ";
+                cin >> cnpj;
+                newEmpresa.setNome(nome);
+                newEmpresa.setCnpj(cnpj);
+                EntradaEmpresa empresaVisitando(newEmpresa);
+                empresaVisitando.operar(ifc);
+                cout << "\nA empresa " << nome << " recebeu o cracha de identificação e entrou no predio!\n";
+                break;
+            }
+            /*
+            case 3: {
+                int number;
+                double amount;
+                cout << "You choose to deposit a certain amount to an account!\n";
+                cout << "Enter the number of the account you wanna deposit: ";
+                cin >> number;
+                cout << "Enter the amount you wanna deposit: ";
+                cin>>amount;
+                DepositOperation accountDeposit(number, amount);
+                accountDeposit.operate(bank);
+                break;
+            }
+            case 4: {
+                int number1;
+                int number2;
+                int amount;
+                cout << "You choose the transference option!\n";
+                cout << "Enter the number of the account you wanna transfer the amount from: ";
+                cin >> number1;
+                cout << "Enter the number of the account you wanna transfer the amount for: ";
+                cin >> number2;
+                cout << "Enter the transference amount: ";
+                cin>>amount;
+                TransferOperation transference(number1, number2, amount);
+                transference.operate(bank);
+                break;
+            }
+            case 5: {
+                int number;
+                double amount;
+                cout << "You choose the whithdrawal option!\n";
+                cout << "Enter the number of the account you wanna whithdraw: ";
+                cin >> number;
+                cout << "Enter the amount you wanna whithdraw: ";
+                cin>>amount;
+                WithdrawalOperation accountWhithdraw(number, amount);
+                accountWhithdraw.operate(bank);
+                break;
+            }
+            case 6: {
+                int number;
+                cout << "You choose the account details option!\n";
+                cout << "Enter the number of the account you wanna check details: ";
+                cin >> number;
+                StatusOperation accountDetails(number);
+                accountDetails.operate(bank);
+                break;
+            }
+            case 7: {
+                cout << "Exiting... Thank you!\n";
+                return 0;
+            }
+            default:
+                cout << "Invalid choice! Please try again.\n";
+        }
+    char again;
+        cout << "Do you want to return to the menu? (Y/N): ";
+        cin >> again;
+        if (again != 'Y' && again != 'y') {
+            cout << "Exiting... Thank you!\n";
+            break;
+        }
+*/
+}
+
+
     //exemplos de teste
 
     //criacao do predio
-    Predio ifc;
 
     //criacao de uma empresa
     Empresa schneider;
