@@ -85,6 +85,26 @@ class Predio {
             int total = visitantePessoa.size() + visitantesEmpresa.size() + exVisitanteEmpresa.size() + exVisitantePessoa.size();
             return total;
         }
+
+        //metodo que retorna pessoa visitante pelo nome
+        Pessoa getPessoaByName(string nome) {
+        for (auto& pessoa : visitantePessoa) {
+            if (pessoa.nome == nome) {
+                return pessoa; // retorna o ponteiro da pessoa se ela estiver no vetor
+            }
+        }
+        return Pessoa();
+    }
+        Empresa getEmpresaByName(string nome) {
+        for (auto& empresa : visitantesEmpresa) {
+            if (empresa.nome == nome) {
+                return empresa; // retorna o ponteiro da pessoa se ela estiver no vetor
+            }
+
+        }
+        cout << "Empresa visitante nao encontrada...\n";
+        return Empresa();
+    }
         
     
 };
@@ -106,8 +126,7 @@ class EntradaEmpresa : public OperacoesPredio {
         EntradaEmpresa(Empresa &e) : empresa(e) {}
 
         void operar(Predio &predio) override {
-            cout << "empresa visitante recebeu seu cracha" << endl;
-            cout << "empresa visitante entrou" << endl;
+
             predio.visitantesEmpresa.push_back(empresa);
         }
 };
@@ -123,9 +142,6 @@ class EntradaPessoaVisitante : public OperacoesPredio {
         }
         
         void operar(Predio & predio) override {
-            cout << "pessoa visitante recebeu seu cracha" << endl;
-            cout << "pessoa visitante entrou" << endl;
-
             predio.visitantePessoa.push_back(pessoa);
         }
 };
@@ -148,8 +164,7 @@ public:
 
         if (it != predio.visitantesEmpresa.end()) {
             predio.visitantesEmpresa.erase(it, predio.visitantesEmpresa.end());
-            cout << "empresa visitante devolveu seu cracha" << endl;
-            cout << "empresa visitante saiu" << endl;
+            cout << "A empresa visitante "<< empresa.getNome() << " devolveu o cracha e saiu do predio" << endl;
         } else {
             cout << "erro: a empresa nao foi encontrada como visitante" << endl;
         }
@@ -164,7 +179,7 @@ class SaidaPessoaVisitante : public OperacoesPredio {
 private:
     Pessoa pessoa;
 public:
-    SaidaPessoaVisitante(Pessoa p) : pessoa(p) {}
+    SaidaPessoaVisitante(Pessoa &p) : pessoa(p) {}
 
     void operar(Predio &predio) override {
         // função que remove a pessoa da lista de visitantes
@@ -175,8 +190,7 @@ public:
 
         if (it != predio.visitantePessoa.end()) {
             predio.visitantePessoa.erase(it, predio.visitantePessoa.end());
-            cout << "pessoa visitante devolveu seu cracha" << endl;
-            cout << "pessoa visitante saiu" << endl;
+            cout << "O (a) visitante "<< pessoa.getNome() << " devolveu o cracha e saiu do predio" << endl;
         } else {
             cout << "erro: a pessoa nao foi encontrada como visitante" << endl;
         }
@@ -197,11 +211,11 @@ int main() {
         cout<<"---- 1) Registrar a entrada de uma pessoa visitante\n";
         cout<<"---- 2) Registrar a entrada de uma empresa visitante\n";
         cout<<"---- 3) Registrar a saida de uma pessoa visitante\n";
-        cout<<"---- 4) Transference\n";
-        cout<<"---- 5) Whithdrawal\n";
-        cout<<"---- 6) Account details\n";
-        cout<<"---- 7) Exit menu\n";
-        cout<<"Enter your choice (1, 2, 3, 4, 5, 6 or 7): ";
+        cout<<"---- 4) Registrar a saida de uma empresa visitante\n";
+        cout<<"---- 5) Consultar visitantes dentro do predio\n";
+        cout<<"---- 6) Consultar visitantes totais do predio\n";
+        cout<<"---- 7) Sair do menu\n";
+        cout<<"Escolha uma das opcoes (1, 2, 3, 4, 5, 6 ou 7): ";
         cin>>choice;
         cin.ignore();
 
@@ -214,13 +228,13 @@ int main() {
                 cout << "Insira os dados da pessoa visitante:\n";
                 cout << "Nome: ";
                 cin >> nome;
-                cout << "\nIdade: ";
+                cout << "Idade: ";
                 cin >> idade;
                 newPessoa.setNome(nome);
                 newPessoa.setIdade(idade);
                 EntradaPessoaVisitante entrada(newPessoa);
                 entrada.operar(ifc);
-                cout << "\nO (a) visitante " << nome << " recebeu o cracha de identificação e entrou no predio!\n";
+                cout << "O (a) visitante " << nome << " recebeu o cracha de identificação e entrou no predio!\n";
                 break;
             }
             case 2: {
@@ -231,81 +245,67 @@ int main() {
                 cout << "Insira os dados da empresa visitante:\n";
                 cout << "Nome: ";
                 cin >> nome;
-                cout << "\nCNPJ: ";
+                cout << "CNPJ: ";
                 cin >> cnpj;
                 newEmpresa.setNome(nome);
                 newEmpresa.setCnpj(cnpj);
                 EntradaEmpresa empresaVisitando(newEmpresa);
                 empresaVisitando.operar(ifc);
-                cout << "\nA empresa " << nome << " recebeu o cracha de identificação e entrou no predio!\n";
+                cout << "A empresa " << nome << " recebeu o cracha de identificação e entrou no predio!\n";
                 break;
             }
-            /*
+            
             case 3: {
-                int number;
-                double amount;
-                cout << "You choose to deposit a certain amount to an account!\n";
-                cout << "Enter the number of the account you wanna deposit: ";
-                cin >> number;
-                cout << "Enter the amount you wanna deposit: ";
-                cin>>amount;
-                DepositOperation accountDeposit(number, amount);
-                accountDeposit.operate(bank);
+                Pessoa visitante;
+                string nome;
+                cout << "Você escolheu a opcao de registrar a saida de uma pessoa visitante!\n";
+                cout << "Insira os dados da pessoa visitante:\n";
+                cout << "Nome: ";
+                cin >> nome;
+                visitante = ifc.getPessoaByName(nome);
+                SaidaPessoaVisitante visitanteSaiu(visitante);
+                visitanteSaiu.operar(ifc);
                 break;
             }
             case 4: {
-                int number1;
-                int number2;
-                int amount;
-                cout << "You choose the transference option!\n";
-                cout << "Enter the number of the account you wanna transfer the amount from: ";
-                cin >> number1;
-                cout << "Enter the number of the account you wanna transfer the amount for: ";
-                cin >> number2;
-                cout << "Enter the transference amount: ";
-                cin>>amount;
-                TransferOperation transference(number1, number2, amount);
-                transference.operate(bank);
+                Empresa visitante;
+                string nome;
+                cout << "Você escolheu a opcao de registrar a saida de uma empresa visitante!\n";
+                cout << "Insira os dados da empresa visitante:\n";
+                cout << "Nome: ";
+                cin >> nome;
+                visitante = ifc.getEmpresaByName(nome);
+                SaidaEmpresaVisitante visitanteSaiu(visitante);
+                visitanteSaiu.operar(ifc);
                 break;
             }
             case 5: {
-                int number;
-                double amount;
-                cout << "You choose the whithdrawal option!\n";
-                cout << "Enter the number of the account you wanna whithdraw: ";
-                cin >> number;
-                cout << "Enter the amount you wanna whithdraw: ";
-                cin>>amount;
-                WithdrawalOperation accountWhithdraw(number, amount);
-                accountWhithdraw.operate(bank);
+                cout << "Numero de visitantes atuais no predio: " << ifc.consultarVisitantesAtuais() << endl;
                 break;
             }
             case 6: {
-                int number;
-                cout << "You choose the account details option!\n";
-                cout << "Enter the number of the account you wanna check details: ";
-                cin >> number;
-                StatusOperation accountDetails(number);
-                accountDetails.operate(bank);
+                cout << "Numero de visitantes totais no predio: " << ifc.consultarVisitantesTotais() << endl;
                 break;
             }
+
             case 7: {
-                cout << "Exiting... Thank you!\n";
+                cout << "Saindo... Obrigado!\n";
                 return 0;
             }
             default:
-                cout << "Invalid choice! Please try again.\n";
+                cout << "Escolha invalida... Tente novamente!\n";
         }
     char again;
-        cout << "Do you want to return to the menu? (Y/N): ";
+        cout << "Deseja retornar ao menu? (S/N): ";
         cin >> again;
-        if (again != 'Y' && again != 'y') {
-            cout << "Exiting... Thank you!\n";
+        if (again != 'S' && again != 's') {
+            cout << "Saindo... Obrigado!\n";
             break;
         }
-*/
 }
 
+/*
+    [Versão inicial dos exemplos]
 
     //exemplos de teste
 
@@ -354,7 +354,7 @@ int main() {
     cout << "Numero de visitantes atuais no predio: " << ifc.consultarVisitantesAtuais() << endl;
     cout << "Numero de visitantes totais: " << ifc.consultarVisitantesTotais() << endl;
 
-
+*/
 
     return 0;
 }
