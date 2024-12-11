@@ -6,7 +6,7 @@ class Pessoa {
         int idade;
         std::string telefone;
         std::string endereco;
-        const int id;
+        int id;
         Pessoa(std::string n, int i, std::string t, std::string e, const int iD);
         virtual ~Pessoa();
         virtual void listarDados();

@@ -1,44 +1,51 @@
 SRC := ./src
 INC := ./includes
+BIN := ./bin
 
-output: main.o Pessoa.o Voluntario.o Animal.o Gato.o Cachorro.o Tutor.o Adocao.o AdocaoGato.o AdocaoCachorro.o Abrigo.o
-	g++ main.o Pessoa.o Voluntario.o Animal.o Gato.o Cachorro.o Tutor.o Adocao.o AdocaoGato.o AdocaoCachorro.o Abrigo.o -o output
+all: $(BIN) $(BIN)/output
 
-main.o: main.cpp
-	g++ -c main.cpp	
+$(BIN):
+	if [ ! -d $(BIN) ]; then mkdir $(BIN); fi
 
-Pessoa.o: $(SRC)/Pessoa.cpp $(INC)/Pessoa.h
-	g++ -c $(SRC)/Pessoa.cpp
+$(BIN)/output: $(BIN)/main.o $(BIN)/Pessoa.o $(BIN)/Voluntario.o $(BIN)/Animal.o $(BIN)/Gato.o $(BIN)/Cachorro.o $(BIN)/Tutor.o $(BIN)/Adocao.o $(BIN)/AdocaoGato.o $(BIN)/AdocaoCachorro.o $(BIN)/Abrigo.o
+	g++ $(BIN)/main.o $(BIN)/Pessoa.o $(BIN)/Voluntario.o $(BIN)/Animal.o $(BIN)/Gato.o $(BIN)/Cachorro.o $(BIN)/Tutor.o $(BIN)/Adocao.o $(BIN)/AdocaoGato.o $(BIN)/AdocaoCachorro.o $(BIN)/Abrigo.o -o $(BIN)/output
 
-Voluntario.o: $(SRC)/Voluntario.cpp $(INC)/Voluntario.h
-	g++ -c $(SRC)/Voluntario.cpp
+$(BIN)/main.o: main.cpp
+	g++ -c main.cpp	-o $(BIN)/main.o 
 
-Animal.o: $(SRC)/Animal.cpp $(INC)/Animal.h
-	g++ -c $(SRC)/Animal.cpp
+$(BIN)/Pessoa.o: $(SRC)/Pessoa.cpp $(INC)/Pessoa.h
+	g++ -c $(SRC)/Pessoa.cpp -o $(BIN)/Pessoa.o
 
-Gato.o: $(SRC)/Gato.cpp $(INC)/Gato.h
-	g++ -c $(SRC)/Gato.cpp
+$(BIN)/Voluntario.o: $(SRC)/Voluntario.cpp $(INC)/Voluntario.h
+	g++ -c $(SRC)/Voluntario.cpp -o  $(BIN)/Voluntario.o 
 
-Cachorro.o: $(SRC)/Cachorro.cpp $(INC)/Cachorro.h
-	g++ -c $(SRC)/Cachorro.cpp
+$(BIN)/Animal.o: $(SRC)/Animal.cpp $(INC)/Animal.h
+	g++ -c $(SRC)/Animal.cpp -o $(BIN)/Animal.o
 
+$(BIN)/Gato.o: $(SRC)/Gato.cpp $(INC)/Gato.h
+	g++ -c $(SRC)/Gato.cpp -o $(BIN)/Gato.o 
 
-Tutor.o: $(SRC)/Tutor.cpp $(INC)/Tutor.h
-	g++ -c $(SRC)/Tutor.cpp
-
-Adocao.o: $(SRC)/Adocao.cpp $(INC)/Adocao.h
-	g++ -c $(SRC)/Adocao.cpp
+$(BIN)/Cachorro.o: $(SRC)/Cachorro.cpp $(INC)/Cachorro.h
+	g++ -c $(SRC)/Cachorro.cpp -o $(BIN)/Cachorro.o 
 
 
-AdocaoGato.o: $(SRC)/AdocaoGato.cpp $(INC)/AdocaoGato.h
-	g++ -c $(SRC)/AdocaoGato.cpp
+$(BIN)/Tutor.o: $(SRC)/Tutor.cpp $(INC)/Tutor.h
+	g++ -c $(SRC)/Tutor.cpp -o $(BIN)/Tutor.o 
 
-AdocaoCachorro.o: $(SRC)/AdocaoCachorro.cpp $(INC)/AdocaoCachorro.h
-	g++ -c $(SRC)/AdocaoCachorro.cpp
+$(BIN)/Adocao.o: $(SRC)/Adocao.cpp $(INC)/Adocao.h
+	g++ -c $(SRC)/Adocao.cpp -o $(BIN)/Adocao.o 
 
-Abrigo.o: $(SRC)/Abrigo.cpp $(INC)/Abrigo.h
-	g++ -c $(SRC)/Abrigo.cpp
+
+$(BIN)/AdocaoGato.o: $(SRC)/AdocaoGato.cpp $(INC)/AdocaoGato.h
+	g++ -c $(SRC)/AdocaoGato.cpp -o $(BIN)/AdocaoGato.o 
+
+$(BIN)/AdocaoCachorro.o: $(SRC)/AdocaoCachorro.cpp $(INC)/AdocaoCachorro.h
+	g++ -c $(SRC)/AdocaoCachorro.cpp -o $(BIN)/AdocaoCachorro.o 
+
+$(BIN)/Abrigo.o: $(SRC)/Abrigo.cpp $(INC)/Abrigo.h
+	g++ -c $(SRC)/Abrigo.cpp -o $(BIN)/Abrigo.o 
 
 
 clean:
-	rm *.o output
+	@if [ -d $(BIN) ]; then rm $(BIN)/*; fi
+	@if [ -d $(BIN) ]; then rmdir $(BIN); fi

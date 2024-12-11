@@ -9,8 +9,8 @@
 
 class Abrigo {
     public:
-        //atributos
-       /* static Voluntario admin;
+        
+       static Voluntario admin;
         std::string nome;
         std::string CNPJ;
         std::string telefone;
@@ -24,18 +24,18 @@ class Abrigo {
 
         //metodos
         Abrigo(std::string n, std::string cnpj, std::string t, std::string e);
-        Voluntario voluntarioLogin(std::string l, std::string s);
-        Tutor* getTutorById(int id);
+        Tutor* getTutorById(int iD);
+        Gato* getGatoById(int iD);
+        //Voluntario* getVoluntarioById(int iD);
+        Cachorro* getCachorroById(int iD);
+        bool voluntarioLogin(std::string l, std::string s);
         void cadastrarVoluntario();
         void cadastrarAnimal();
         void cadastrarTutor();
         void listarAnimais();
-        Gato* getGatoById(int id);
-        Cachorro* getCachorroById(int id);
         void removerVoluntario();
         void removerAnimal();
         void realizarAdocao();
         void listarAdocoes();
-        */
 
 };
