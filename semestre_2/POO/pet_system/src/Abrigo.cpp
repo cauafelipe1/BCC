@@ -13,7 +13,50 @@ Abrigo::Abrigo(string n, string cnpj, string t, string e) : nome(n), CNPJ(cnpj),
 void Abrigo::cadastrarVoluntario() {
     cout << "[CADASTRO DE VOLUNTARIO]\n";
     cout << "Insira alguns dados para seguir com o cadastro...\n";
-    //implementar verificacoes + hash de senha em um arquivo com funcoes uteis
+    try
+    {
+        string nome;
+        int idade;
+        string telefone;
+        string endereco;
+        int id = funcionarios.back().id + 1;
+        string login;
+        string senha;
+        cout << "Nome: ";
+        getline(cin >> ws, nome);
+        cout << "Idade: ";
+        if (!(cin >> idade)) {
+            throw runtime_error("Insira uma idade valida!\n");
+        }
+        if ((idade < 14) || (idade > 80)) {
+            throw runtime_error("Somente podem ser cadastrados voluntarios de 14 a 80 anos..\n");
+        }
+        cin.clear();
+        cin.ignore();
+
+        cout << "Telefone: ";
+        getline(cin >> ws, telefone);
+        cout << "Endereco: ";
+        getline(cin >> ws, endereco);
+        cout << "Login: ";
+        getline(cin >> ws, login);
+        cout << "Senha: ";
+        //implementar hash
+        getline(cin >> ws, senha);
+        
+
+
+        Voluntario newVoluntario(nome, idade, telefone, endereco,  id, login, senha);
+        funcionarios.push_back(newVoluntario);
+        cout << "Novo voluntario cadastrado com sucesso!\n";
+    }
+    catch(const exception& e)
+    {
+        cout << "Erro: " << e.what() << '\n';
+    }
+    catch (...) {
+        cout << "erro inesperado..\n";
+    }
 }
 
 Tutor* Abrigo::getTutorById(int iD) {
@@ -72,12 +115,153 @@ void Abrigo::cadastrarAnimal() {
         switch (escolha) {
         case 1: {
             cout << "Insira os dados do cachorro que sera cadastrado no abrigo...\n";
-            /* trata os inputs do cachorro*/
+            try
+            {
+                string nome;
+                int idade;
+                int id;
+                string origem; 
+                string especificacoes;
+                bool sociavel;
+                string raca;
+                string porte;
+                string nivelAdestramento;
+                cout << "Nome: ";
+                getline(cin >> ws, nome);
+                cout << "Idade: ";
+                if (!(cin >> idade)) {
+                    throw runtime_error("Insira um valor de idade valido!\n");
+                    break;
+                }
+                if ((idade < 1) || (idade > 30)) {
+                    throw runtime_error("Insira uma idade real (1 a 30 anos)..\n");
+                    break;
+                }
+                cin.clear();
+                cin.ignore();
+
+                cout << "Origem: ";
+                getline(cin >> ws, origem);
+                cout << "Especificacoes: ";
+                getline(cin >> ws, especificacoes);
+
+                char x;
+                cout << "O cachorro é sociavel? (S/N): ";
+                cin >> x;
+                if (x == 'S' || x == 's') {
+                    sociavel = true;
+                }
+                else if (x == 'N' || x == 'n') {
+                    sociavel = false;
+                }
+                else {
+                    throw invalid_argument("Entrada invalida..");
+                    break;
+                }
+                cin.clear();
+                cin.ignore();
+
+                cout << "Raca: ";
+                getline(cin >> ws, raca);
+                cout << "Porte: ";
+                getline(cin >> ws, porte);
+                cout << "Nivel de adestramento: ";
+                getline(cin >> ws, nivelAdestramento);
+
+                if (caes.empty()) {
+                    id = 1;
+                }
+                else {
+                    id = caes.back().id + 1;
+                }
+
+                Cachorro newDog(nome, idade, id, origem, sociavel,  especificacoes,  raca,  porte,  nivelAdestramento);
+                caes.push_back(newDog);
+                cout << "CACHORRO CADASTRADO COM SUCESSO!!\n";
+            }
+            catch(const exception& e) {
+                cout << "Erro: " << e.what() << "\n";
+            }
+            catch(...) {
+                cout << "erro inesperado...";
+            }
+            
             break;
         }
         case 2: {
             cout << "Insira os dados do gato que sera cadastrado no abrigo...\n";
-            /* trata os inputs do gato */
+            try
+            {
+                string nome;
+                int idade;
+                int id;
+                string origem; 
+                string especificacoes;
+                bool sociavel;
+                string padraoPelagem;
+                string comprimentoPelagem;
+                string preferenciaAmbiente;
+                cout << "Nome: ";
+                getline(cin >> ws, nome);
+                cout << "Idade: ";
+                if (!(cin >> idade)) {
+                    throw runtime_error("Insira um valor de idade valido!\n");
+                    break;
+                }
+                if ((idade < 1) || (idade > 30)) {
+                    throw runtime_error("Insira uma idade real (1 a 30 anos)..\n");
+                    break;
+                }
+                cin.clear();
+                cin.ignore();
+
+                cout << "Origem: ";
+                getline(cin >> ws, origem);
+                cout << "Especificacoes: ";
+                getline(cin >> ws, especificacoes);
+
+                char x;
+                cout << "O gato é sociavel? (S/N): ";
+                cin >> x;
+                if (x == 'S' || x == 's') {
+                    sociavel = true;
+                }
+                else if (x == 'N' || x == 'n') {
+                    sociavel = false;
+                }
+                else {
+                    throw invalid_argument("Entrada invalida..");
+                    break;
+                }
+                cin.clear();
+                cin.ignore();
+                cout << "Padrao de pelagem: ";
+                getline(cin >> ws, padraoPelagem);
+
+                cout << "Comprimento da pelagem: ";
+                getline(cin >> ws, comprimentoPelagem);
+
+                cout << "Preferencia de ambiente: ";
+                getline(cin >> ws, preferenciaAmbiente);
+
+                if (caes.empty()) {
+                    id = 1;
+                }
+                else {
+                    id = caes.back().id + 1;
+                }
+
+                Gato newCat(nome, idade, id, origem, sociavel,  especificacoes,  padraoPelagem, comprimentoPelagem, preferenciaAmbiente);
+                gatos.push_back(newCat);
+                cout << "GATO CADASTRADO COM SUCESSO!!\n";
+            }
+            catch(const exception& e) {
+                cout << "Erro: " << e.what() << "\n";
+            }
+            catch(...) {
+                cout << "erro inesperado...";
+            }
+            
             break;
         }
         default:
@@ -89,6 +273,52 @@ void Abrigo::cadastrarAnimal() {
 
 void Abrigo::cadastrarTutor() {
     cout << "[CADASTRO DE TUTOR]\n";
+
+     try
+    {
+        string nome;
+        int idade;
+        string telefone;
+        string endereco;
+        int id;
+        vector<Gato> gatos;
+        vector<Cachorro> caes;
+
+        cout << "Nome: ";
+        getline(cin >> ws, nome);
+        cout << "Idade: ";
+        if (!(cin >> idade)) {
+            throw runtime_error("Insira uma idade valida!\n");
+        }
+        if ((idade < 10) || (idade > 100)) {
+            throw runtime_error("Somente podem ser cadastrados tutores de 10 a 100 anos..\n");
+        }
+        cin.clear();
+        cin.ignore();
+
+        cout << "Telefone: ";
+        getline(cin >> ws, telefone);
+        cout << "Endereco: ";
+        getline(cin >> ws, endereco);
+        if (tutores.empty()) {
+             id = 1;
+        }
+        else {
+            id = tutores.back().id + 1;
+        }
+
+
+        Tutor newTutor(nome, idade, telefone, endereco,  id, gatos, caes);
+        tutores.push_back(newTutor);
+        cout << "Novo tutor cadastrado com sucesso!\n";
+    }
+    catch(const exception& e)
+    {
+        cout << "Erro: " << e.what() << '\n';
+    }
+    catch (...) {
+        cout << "erro inesperado..\n";
+    }
 
 }
 
@@ -206,7 +436,107 @@ void Abrigo::removerAnimal() {
 }
 
 void Abrigo::realizarAdocao() {
-    //realizar adocao
+    cout << "[ADOCAO]\n";
+    cadastrarTutor();
+    int escolha;
+    int idEscolhido;
+    while (1) {
+        cout << "Que tipo de animal deseja adotar?\n";
+        cout << "1 - Cachorro\n";
+        cout << "2 - Gato\n";
+        cout << "Insira sua escolha (1 ou 2): ";
+        cin >> escolha;
+        cin.ignore();
+        switch (escolha) {
+        case 1: {
+            try {
+                cout << "Confira a lista abaixo com os animais disponiveis no abrigo:\n";
+                listarAnimais();
+            cout << "Insira o ID do cachorro que deseja realizar a adocao: ";
+            if (cin >> idEscolhido) {
+                throw runtime_error("Insira um numero valido\n");
+                break;
+            }
+            
+            cin.clear();
+            cin.ignore();
+
+            Cachorro* caoEscolhido = getCachorroById(idEscolhido);
+            Tutor* currentTutor = getTutorById(tutores.back().id);
+            currentTutor->caes.emplace_back(caoEscolhido->nome, caoEscolhido->idade, caoEscolhido->id, caoEscolhido->origem, caoEscolhido->sociavel, caoEscolhido->especificacoes, caoEscolhido->raca, caoEscolhido->porte, caoEscolhido->nivelAdestramento);
+            
+            //remocao do cachorro de dentro do abrigo
+            auto condicao = [idEscolhido](const Cachorro& dog) {
+                return dog.id == idEscolhido;
+            };
+            auto newEnd = remove_if(caes.begin(), caes.end(), condicao);
+
+            if (newEnd!= caes.end()) {
+                caes.erase(newEnd, caes.end());
+                cout << "Cachorro removido do abrigo com sucesso! Agora ele tera um novo lar :)\n";
+            } 
+            else {
+                cout << "Cachorro nao encontrado no abrigo...\n";
+            }   
+
+            }
+            catch(const exception& e) {
+                cout << "Erro: " << e.what() << '\n';
+            }
+            catch (...) {
+                cout << "erro inesperado..\n";
+            }
+            
+            break;
+        }
+
+        case 2: {
+            try {
+                cout << "Confira a lista abaixo com os animais disponiveis no abrigo:\n";
+                listarAnimais();
+            cout << "Insira o ID do gato que deseja realizar a adocao: ";
+            if (cin >> idEscolhido) {
+                throw runtime_error("Insira um numero valido\n");
+                break;
+            }
+            
+            cin.clear();
+            cin.ignore();
+
+            Gato* gatoEscolhido = getGatoById(idEscolhido);
+            Tutor* currentTutor = getTutorById(tutores.back().id);
+            currentTutor->gatos.emplace_back(gatoEscolhido->nome, gatoEscolhido->idade, gatoEscolhido->id, gatoEscolhido->origem, gatoEscolhido->sociavel, gatoEscolhido->especificacoes, gatoEscolhido->padraoPelagem, gatoEscolhido->comprimentoPelagem, gatoEscolhido->preferenciaAmbiente);
+            
+            //remocao do gato de dentro do abrigo
+            auto condicao = [idEscolhido](const Gato& cat) {
+                return cat.id == idEscolhido;
+            };
+            auto newEnd = remove_if(gatos.begin(), gatos.end(), condicao);
+
+            if (newEnd!= gatos.end()) {
+                gatos.erase(newEnd, gatos.end());
+                //AdocaoGato("bla", 1, currentTutor, gatoEscolhido);
+                cout << "Gato removido do abrigo com sucesso! Agora ele tera um novo lar :)\n";
+            } 
+            else {
+                cout << "Gato nao encontrado no abrigo...\n";
+            }   
+
+            }
+            catch(const exception& e) {
+                cout << "Erro: " << e.what() << '\n';
+            }
+            catch (...) {
+                cout << "erro inesperado..\n";
+            }
+            
+            break;
+        }
+        
+        default:
+            cout << "insira uma opcao valida\n";
+        }
+    }
 }
 
 void Abrigo::listarAdocoes() {

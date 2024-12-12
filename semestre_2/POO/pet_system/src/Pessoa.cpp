@@ -3,7 +3,7 @@
 
 using namespace std;
 
-Pessoa::Pessoa(string n, int i, string t, string e, const int id) : nome(n), idade(i), telefone(t), endereco(e), id(id) {
+Pessoa::Pessoa(string n, int i, string t, string e, int id) : nome(n), idade(i), telefone(t), endereco(e), id(id) {
 
 }
 

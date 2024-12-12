@@ -2,7 +2,7 @@
 #include "../includes/Tutor.h"
 #include<vector>
 
-Tutor::Tutor(std::string n, int i, std::string t, std::string e, const int iD, std::vector<Gato> g, std::vector<Cachorro> c) : Pessoa(n, i, t, e, iD), gatos(g), caes(c) {}
+Tutor::Tutor(std::string n, int i, std::string t, std::string e, int iD, std::vector<Gato> g, std::vector<Cachorro> c) : Pessoa(n, i, t, e, iD), gatos(g), caes(c) {}
 
 void Tutor::listarDados() {
     Pessoa::listarDados();

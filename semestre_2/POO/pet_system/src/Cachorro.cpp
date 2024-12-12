@@ -8,6 +8,6 @@ void Cachorro::listarDados() {
     Animal::listarDados();
     cout << "Raca: " << raca << endl;
     cout << "Porte: " << porte << endl;
-    cout << "Nivel de adestramentp: " << nivelAdestramento << endl;
+    cout << "Nivel de adestramento: " << nivelAdestramento << endl;
 
 }
