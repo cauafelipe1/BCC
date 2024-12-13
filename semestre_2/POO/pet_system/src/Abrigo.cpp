@@ -1,6 +1,7 @@
 #include<iostream>
 #include "../includes/Abrigo.h"
 #include <algorithm>
+#include "../includes/uteis.h"
 using namespace std;
     
 
@@ -10,11 +11,11 @@ Abrigo::Abrigo(string n, string cnpj, string t, string e) : nome(n), CNPJ(cnpj),
     funcionarios.push_back(admin);
 }
 
+//classe de cadastro de voluntario
 void Abrigo::cadastrarVoluntario() {
-    cout << "[CADASTRO DE VOLUNTARIO]\n";
+    cout << "\n[ CADASTRO DE VOLUNTARIO ]\n";
     cout << "Insira alguns dados para seguir com o cadastro...\n";
-    try
-    {
+    try {
         string nome;
         int idade;
         string telefone;
@@ -22,40 +23,45 @@ void Abrigo::cadastrarVoluntario() {
         int id = funcionarios.back().id + 1;
         string login;
         string senha;
+
         cout << "Nome: ";
-        getline(cin >> ws, nome);
+        getline(cin >> ws, nome); 
+
         cout << "Idade: ";
-        if (!(cin >> idade)) {
-            throw runtime_error("Insira uma idade valida!\n");
+        if (!(cin >> idade)) { 
+            clearInputBuffer();
+            throw runtime_error("Insira uma idade válida!");
         }
-        if ((idade < 14) || (idade > 80)) {
-            throw runtime_error("Somente podem ser cadastrados voluntarios de 14 a 80 anos..\n");
+        if (idade < 14 || idade > 80) {
+            throw runtime_error("Somente podem ser cadastrados voluntários de 14 a 80 anos.");
         }
-        cin.clear();
         cin.ignore();
+         
 
         cout << "Telefone: ";
         getline(cin >> ws, telefone);
+
         cout << "Endereco: ";
         getline(cin >> ws, endereco);
+
         cout << "Login: ";
         getline(cin >> ws, login);
+
         cout << "Senha: ";
-        //implementar hash
         getline(cin >> ws, senha);
-        
 
-
-        Voluntario newVoluntario(nome, idade, telefone, endereco,  id, login, senha);
+        Voluntario newVoluntario(nome, idade, telefone, endereco, id, login, criptografar(senha, 'K'));
         funcionarios.push_back(newVoluntario);
-        cout << "Novo voluntario cadastrado com sucesso!\n";
-    }
-    catch(const exception& e)
-    {
+
+        
+        cout << "Novo voluntário cadastrado com sucesso!\n";
+        return;
+    } catch (const exception& e) {
         cout << "Erro: " << e.what() << '\n';
-    }
-    catch (...) {
-        cout << "erro inesperado..\n";
+        return;
+    } catch (...) {
+        cout << "Erro inesperado.\n";
+        return;
     }
 }
 
@@ -89,8 +95,9 @@ Cachorro* Abrigo::getCachorroById(int iD) {
 }
 
 bool Abrigo::voluntarioLogin(string l, string s) {
+    string senhaEncriptada = criptografar(s, 'K');
     for (auto& voluntario : funcionarios) {
-        if ((voluntario.login == l) && (voluntario.senha == s)) {
+        if ((voluntario.login == l) && (voluntario.senha == senhaEncriptada)) {
             return true;
         }
     }
@@ -130,14 +137,13 @@ void Abrigo::cadastrarAnimal() {
                 getline(cin >> ws, nome);
                 cout << "Idade: ";
                 if (!(cin >> idade)) {
+                    clearInputBuffer();
                     throw runtime_error("Insira um valor de idade valido!\n");
-                    break;
                 }
                 if ((idade < 1) || (idade > 30)) {
                     throw runtime_error("Insira uma idade real (1 a 30 anos)..\n");
-                    break;
+                 
                 }
-                cin.clear();
                 cin.ignore();
 
                 cout << "Origem: ";
@@ -155,10 +161,9 @@ void Abrigo::cadastrarAnimal() {
                     sociavel = false;
                 }
                 else {
+                    clearInputBuffer();
                     throw invalid_argument("Entrada invalida..");
-                    break;
                 }
-                cin.clear();
                 cin.ignore();
 
                 cout << "Raca: ";
@@ -178,15 +183,18 @@ void Abrigo::cadastrarAnimal() {
                 Cachorro newDog(nome, idade, id, origem, sociavel,  especificacoes,  raca,  porte,  nivelAdestramento);
                 caes.push_back(newDog);
                 cout << "CACHORRO CADASTRADO COM SUCESSO!!\n";
+        
             }
             catch(const exception& e) {
                 cout << "Erro: " << e.what() << "\n";
+                return;
             }
             catch(...) {
                 cout << "erro inesperado...";
+                return;
             }
             
-            break;
+            return;
         }
         case 2: {
             cout << "Insira os dados do gato que sera cadastrado no abrigo...\n";
@@ -205,14 +213,14 @@ void Abrigo::cadastrarAnimal() {
                 getline(cin >> ws, nome);
                 cout << "Idade: ";
                 if (!(cin >> idade)) {
+                    clearInputBuffer();
                     throw runtime_error("Insira um valor de idade valido!\n");
-                    break;
+              
                 }
                 if ((idade < 1) || (idade > 30)) {
                     throw runtime_error("Insira uma idade real (1 a 30 anos)..\n");
-                    break;
+             
                 }
-                cin.clear();
                 cin.ignore();
 
                 cout << "Origem: ";
@@ -230,10 +238,10 @@ void Abrigo::cadastrarAnimal() {
                     sociavel = false;
                 }
                 else {
+                    clearInputBuffer();
                     throw invalid_argument("Entrada invalida..");
-                    break;
+                  
                 }
-                cin.clear();
                 cin.ignore();
                 cout << "Padrao de pelagem: ";
                 getline(cin >> ws, padraoPelagem);
@@ -244,11 +252,11 @@ void Abrigo::cadastrarAnimal() {
                 cout << "Preferencia de ambiente: ";
                 getline(cin >> ws, preferenciaAmbiente);
 
-                if (caes.empty()) {
+                if (gatos.empty()) {
                     id = 1;
                 }
                 else {
-                    id = caes.back().id + 1;
+                    id = gatos.back().id + 1;
                 }
 
                 Gato newCat(nome, idade, id, origem, sociavel,  especificacoes,  padraoPelagem, comprimentoPelagem, preferenciaAmbiente);
@@ -257,12 +265,14 @@ void Abrigo::cadastrarAnimal() {
             }
             catch(const exception& e) {
                 cout << "Erro: " << e.what() << "\n";
+                return;
             }
             catch(...) {
                 cout << "erro inesperado...";
+                return;
             }
             
-            break;
+            return;
         }
         default:
             cout << "escolha invalida!\n";
@@ -288,14 +298,14 @@ void Abrigo::cadastrarTutor() {
         getline(cin >> ws, nome);
         cout << "Idade: ";
         if (!(cin >> idade)) {
+            clearInputBuffer();
             throw runtime_error("Insira uma idade valida!\n");
         }
+        cin.ignore();
         if ((idade < 10) || (idade > 100)) {
             throw runtime_error("Somente podem ser cadastrados tutores de 10 a 100 anos..\n");
-        }
-        cin.clear();
+        } 
         cin.ignore();
-
         cout << "Telefone: ";
         getline(cin >> ws, telefone);
         cout << "Endereco: ";
@@ -311,13 +321,16 @@ void Abrigo::cadastrarTutor() {
         Tutor newTutor(nome, idade, telefone, endereco,  id, gatos, caes);
         tutores.push_back(newTutor);
         cout << "Novo tutor cadastrado com sucesso!\n";
+        return;
     }
     catch(const exception& e)
     {
         cout << "Erro: " << e.what() << '\n';
+        return;
     }
     catch (...) {
         cout << "erro inesperado..\n";
+        return;
     }
 
 }
@@ -326,39 +339,30 @@ void Abrigo::listarAnimais() {
     cout << "[ANIMAIS DISPONIVEIS PARA ADOCAO]\n";
     
     cout << "Cachorros:\n";
-    int i = 1;
     for (auto& dog : caes) { 
-        cout << i << " - ";
         dog.listarDados();
-        i++;
     }
     cout << "Gatos:\n";
     for (auto & cat : gatos) {
-        cout << i << " - ";
         cat.listarDados();
-        i++; 
     }
 }
-/*
-Voluntario* Abrigo::getVoluntarioById (int iD) {
-    for (auto& voluntario : funcionarios) {
-        if (voluntario.id == iD) {
-            return &voluntario;
-        }
-    }
-    return nullptr;
-}
-*/
+
 
 void Abrigo::removerVoluntario() {
+    try {
     cout << "[REMOVER VOLUNTARIO]\n";
     int iD;
     cout << "Insira o ID do voluntario que sera removido: ";
-    cin >> iD;
-    cin.ignore();
+    if (!(cin >> iD))
+    {
+        clearInputBuffer();
+        throw runtime_error("Insira um id valido..");
+    }
     
     if (iD == 1) {
         cout << "admin nao pode ser removido\n";
+        return void();
     }
 
     auto condicao = [iD](const Voluntario& voluntario) {
@@ -369,9 +373,23 @@ void Abrigo::removerVoluntario() {
         if (newEnd!= funcionarios.end()) {
             funcionarios.erase(newEnd, funcionarios.end());
             cout << "Voluntario removido com sucesso!\n" << endl;
+            return;
         } else {
             cout << "ID de voluntario nao encontrado...\n" << endl;
+            return;
         }
+    }
+    catch(const std::exception& e)
+    {
+        cout << "Erro: " << e.what() << '\n';
+        return void();
+    }
+    catch(...) {
+        cout << "erro inesperado...\n";
+        return void();
+    }
+    
+   
 }
 
 void Abrigo::removerAnimal() {
@@ -387,9 +405,23 @@ void Abrigo::removerAnimal() {
         cin.ignore();
         switch (escolha) {
         case 1: {
+            try
+            {
+            if (caes.size() == 0) {
+                cout << "O abrigo não possui cachorros para serem removidos..\n";
+                return;
+            }
+            cout << "Lista de cachorros - ID e nome:\n";
+            for (auto&dog : caes) {
+                cout << dog.id << " - " << dog.nome << endl;
+            }
             cout << "Insira o ID do cachorro que deseja remover do abrigo: ";
-            cin >> iD;
-            cin.ignore();
+            if (!(cin >> iD))
+            {
+                clearInputBuffer();
+                throw runtime_error("insira um id valido..");
+            }
+           cin.ignore();
 
             auto condicao = [iD](const Cachorro& dog) {
                 return dog.id == iD;
@@ -403,14 +435,40 @@ void Abrigo::removerAnimal() {
             else {
                 cout << "Cachorro nao encontrado no abrigo...\n";
             }
+            return;
+            }
+            catch(const std::exception& e)
+            {
+                cout << "Erro: " << e.what() << endl;
+                return;
+            }
+            catch (...) {
+                cout << "Erro inesperado..\n";
+                return;
+            }
 
-            break;
+            return;
         }
 
         case 2: {
 
+            try
+            {
+            if (gatos.size() == 0) {
+                cout << "O abrigo não possui gatos para serem removidos..\n";
+                return;
+            }
+
+            cout << "Lista de gatos - ID e nome:\n";
+            for (auto&cat : gatos) {
+                cout << cat.id << " - " << cat.nome << endl;
+            }
             cout << "Insira o ID do gato que deseja remover do abrigo: ";
-            cin >> iD;
+
+            if (!(cin >> iD)) {
+                clearInputBuffer();
+                throw runtime_error("Insira um id valido..");
+            }
             cin.ignore();
 
             auto condicao = [iD](const Gato& cat) {
@@ -425,14 +483,25 @@ void Abrigo::removerAnimal() {
             else {
                 cout << "Gato nao encontrado no abrigo...\n";
             }
-            break;
+            }
+            catch(const std::exception& e)
+            {
+                cout << "Erro: " << e.what() << endl;
+                return;
+            }
+            
+            catch(...) {
+                cout << "erro inesperado...\n";
+                return;
+            }
+        return;
         }
         
         default:
             cout << "insira uma opcao valida\n";
         }
     }
-    
+    return;
 }
 
 void Abrigo::realizarAdocao() {
@@ -453,17 +522,16 @@ void Abrigo::realizarAdocao() {
                 cout << "Confira a lista abaixo com os animais disponiveis no abrigo:\n";
                 listarAnimais();
             cout << "Insira o ID do cachorro que deseja realizar a adocao: ";
-            if (cin >> idEscolhido) {
+            if (!(cin >> idEscolhido)) {
+                clearInputBuffer();
                 throw runtime_error("Insira um numero valido\n");
-                break;
             }
-            
-            cin.clear();
             cin.ignore();
+ 
 
             Cachorro* caoEscolhido = getCachorroById(idEscolhido);
             Tutor* currentTutor = getTutorById(tutores.back().id);
-            currentTutor->caes.emplace_back(caoEscolhido->nome, caoEscolhido->idade, caoEscolhido->id, caoEscolhido->origem, caoEscolhido->sociavel, caoEscolhido->especificacoes, caoEscolhido->raca, caoEscolhido->porte, caoEscolhido->nivelAdestramento);
+            currentTutor->caes.push_back(*caoEscolhido);
             
             //remocao do cachorro de dentro do abrigo
             auto condicao = [idEscolhido](const Cachorro& dog) {
@@ -472,7 +540,20 @@ void Abrigo::realizarAdocao() {
             auto newEnd = remove_if(caes.begin(), caes.end(), condicao);
 
             if (newEnd!= caes.end()) {
+                string dataAtual = obterDataAtual();
+
                 caes.erase(newEnd, caes.end());
+                if (adocoesCachorros.size() == 0) {
+                    AdocaoCachorro newAdocao(dataAtual, 1, *currentTutor, *caoEscolhido);
+                    adocoesCachorros.push_back(newAdocao);
+                }
+                else {
+                int newID = adocoesCachorros.back().id + 1;
+                AdocaoCachorro newAdocao(dataAtual, newID, *currentTutor, *caoEscolhido);
+                adocoesCachorros.push_back(newAdocao);
+               
+                }
+
                 cout << "Cachorro removido do abrigo com sucesso! Agora ele tera um novo lar :)\n";
             } 
             else {
@@ -482,12 +563,14 @@ void Abrigo::realizarAdocao() {
             }
             catch(const exception& e) {
                 cout << "Erro: " << e.what() << '\n';
+                return;
             }
             catch (...) {
                 cout << "erro inesperado..\n";
+                return;
             }
             
-            break;
+            return;
         }
 
         case 2: {
@@ -495,18 +578,16 @@ void Abrigo::realizarAdocao() {
                 cout << "Confira a lista abaixo com os animais disponiveis no abrigo:\n";
                 listarAnimais();
             cout << "Insira o ID do gato que deseja realizar a adocao: ";
-            if (cin >> idEscolhido) {
+            if (!(cin >> idEscolhido)) {
+                clearInputBuffer();
                 throw runtime_error("Insira um numero valido\n");
-                break;
+                return;
             }
-            
-            cin.clear();
             cin.ignore();
 
             Gato* gatoEscolhido = getGatoById(idEscolhido);
             Tutor* currentTutor = getTutorById(tutores.back().id);
-            currentTutor->gatos.emplace_back(gatoEscolhido->nome, gatoEscolhido->idade, gatoEscolhido->id, gatoEscolhido->origem, gatoEscolhido->sociavel, gatoEscolhido->especificacoes, gatoEscolhido->padraoPelagem, gatoEscolhido->comprimentoPelagem, gatoEscolhido->preferenciaAmbiente);
-            
+            currentTutor->gatos.push_back(*gatoEscolhido);
             //remocao do gato de dentro do abrigo
             auto condicao = [idEscolhido](const Gato& cat) {
                 return cat.id == idEscolhido;
@@ -515,7 +596,18 @@ void Abrigo::realizarAdocao() {
 
             if (newEnd!= gatos.end()) {
                 gatos.erase(newEnd, gatos.end());
-                //AdocaoGato("bla", 1, currentTutor, gatoEscolhido);
+                string dataAtual = obterDataAtual();
+                if (adocoesGatos.size() == 0) {
+                    AdocaoGato novaAdocao(dataAtual, 1, *currentTutor, *gatoEscolhido);
+                    adocoesGatos.push_back(novaAdocao);
+                }
+                else {
+                int newID = adocoesGatos.back().id + 1;
+
+                AdocaoGato novaAdocao(dataAtual, newID, *currentTutor, *gatoEscolhido);
+                adocoesGatos.push_back(novaAdocao);
+                }
+                
                 cout << "Gato removido do abrigo com sucesso! Agora ele tera um novo lar :)\n";
             } 
             else {
@@ -525,12 +617,14 @@ void Abrigo::realizarAdocao() {
             }
             catch(const exception& e) {
                 cout << "Erro: " << e.what() << '\n';
+                return;
             }
             catch (...) {
                 cout << "erro inesperado..\n";
+                return;
             }
             
-            break;
+            return;
         }
         
         default:

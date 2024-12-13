@@ -7,6 +7,7 @@ Animal::Animal(string n, int i, int iD, string o, bool s, string e) : nome(n), i
 void Animal::listarDados() {
 
     cout << "[DADOS]\n";
+    cout << "Id: " << id << endl;
     cout << "Nome: " << nome << endl;
     cout << "Idade: " << idade << endl;
     cout << "Origem: " << origem << endl;
